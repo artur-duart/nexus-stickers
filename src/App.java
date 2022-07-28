@@ -1,9 +1,10 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,10 +24,18 @@ public class App {
 		List<Map<String, String>> moviesList = parser.parse(body);
 
 		// 3 - View and manipulate the data.
+		var generator = new StickerGenerator();
 		for (Map<String, String> movie : moviesList) {
-			System.out.println(movie.get("Title"));
-			System.out.println(movie.get("Poster"));
-			System.out.println(movie.get("Year"));
+
+			String urlImage = movie.get("Poster");
+			String title = movie.get("Title");
+
+			InputStream inputStream = new URL(urlImage).openStream();
+			String fileName = title + ".png";
+
+			generator.create(inputStream, fileName);
+
+			System.out.println("Title: " + movie.get("Title"));
 			System.out.println();
 		}
 	}
