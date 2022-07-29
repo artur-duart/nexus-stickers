@@ -21,5 +21,5 @@ Project developed at Alura's Java Immersion, aiming to create an application tha
 
 ### ✅ 2nd day result
 
-<img src="img/batman.png" height="700">
+<img src="img/batman.png" height="500">
 <img align="top" src="img/whatsapp.png" height="300">
