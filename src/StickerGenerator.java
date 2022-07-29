@@ -34,7 +34,7 @@ public class StickerGenerator {
 		graphics.setFont(font);
 
 		// 5 - Write a phrase on the new image;
-		graphics.drawString("Batman!!", width / 4, newHeight - 100);
+		graphics.drawString("TOP!", width / 4, height + 100);
 
 		// 6 - Save the new image in a file.
 		ImageIO.write(newImage, "png", new File("output/" + fileName));

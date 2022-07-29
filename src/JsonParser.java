@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,9 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JsonParser {
-
 	private static final Pattern REGEX_ITEMS = Pattern.compile(".*\\[(.+)\\].*");
-	private static final Pattern REGEX_ATRIBUTOS_JSON = Pattern.compile("\"(.+?)\":\"(.*?)\"");
+	private static final Pattern REGEX_attributeS_JSON = Pattern.compile("\"(.+?)\":\"(.*?)\"");
 
 	public List<Map<String, String>> parse(String json) {
 		Matcher matcher = REGEX_ITEMS.matcher(json);
@@ -26,16 +24,17 @@ public class JsonParser {
 
 			Map<String, String> attributesItem = new HashMap<>();
 
-			Matcher matcherAttributesJson = REGEX_ATRIBUTOS_JSON.matcher(item);
+			Matcher matcherAttributesJson = REGEX_attributeS_JSON.matcher(item);
 			while (matcherAttributesJson.find()) {
 				String attribute = matcherAttributesJson.group(1);
-				String value = matcherAttributesJson.group(2);
-				attributesItem.put(attribute, value);
+				String valor = matcherAttributesJson.group(2);
+				attributesItem.put(attribute, valor);
 			}
 
 			datas.add(attributesItem);
 		}
 
 		return datas;
+
 	}
 }

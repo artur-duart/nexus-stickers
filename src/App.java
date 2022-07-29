@@ -1,41 +1,40 @@
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
-import java.util.Map;
 
 public class App {
 	public static void main(String[] args) throws Exception {
 
-		// 1 - Make an HTTP connection and fetch the top 250 movies;
+		// 1 - Make an HTTP connection and fetch the top 250 contents;
+		
+		FakeMovieContentExtractor extractor = new FakeMovieContentExtractor();
 		String url = "https://fake-movie-database-api.herokuapp.com/api?s=batman";
-		URI address = URI.create(url);
-		var client = HttpClient.newHttpClient();
-		var req = HttpRequest.newBuilder(address).GET().build();
-		HttpResponse<String> res = client.send(req, BodyHandlers.ofString());
-		String body = res.body();
+		
+//		NasaContentExtractor extractor = new NasaContentExtractor();
+//		String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2005-01-18&end_date=2005-01-27";
+//		String url = "https://api.mocki.io/v2/549a5d8b/NASA-APOD";
+		
+//		ImdbContentExtractor extractor = new ImdbContentExtractor();
+//		String url = "https://imdb-api.com/en/API/Top250TVs/key";
+//		String url = "https://linguagens-imersao-api.herokuapp.com/linguagens";
 
-		// 2 - Get only the data that matters (title, poster, year);
-		var parser = new JsonParser();
-		List<Map<String, String>> moviesList = parser.parse(body);
+		var http = new ClientHttp();
+		String json = http.searchData(url);
 
-		// 3 - View and manipulate the data.
+		// 2 - View and manipulate the data.
+		List<Content> contents = extractor.extractContents(json);
+
 		var generator = new StickerGenerator();
-		for (Map<String, String> movie : moviesList) {
+		for (int i = 0; i < 4; i++) {
 
-			String urlImage = movie.get("Poster");
-			String title = movie.get("Title");
+			Content content = contents.get(i);
 
-			InputStream inputStream = new URL(urlImage).openStream();
-			String fileName = title + ".png";
+			InputStream inputStream = new URL(content.getUrlImage()).openStream();
+			String fileName = content.getTitle() + ".png";
 
 			generator.create(inputStream, fileName);
 
-			System.out.println("Title: " + movie.get("Title"));
+			System.out.println("Title: " + content.getTitle());
 			System.out.println();
 		}
 	}
