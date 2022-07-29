@@ -20,6 +20,7 @@ Project developed at Alura's Java Immersion, aiming to create an application tha
 ![firstdayresult](img/firstday.png)
 
 ### ✅ 2nd day result
-
-<img src="img/batman.png" height="500">
-<img align="right" src="img/whatsapp.png" height="300">
+<div display="flex" flex-direction="row">
+  <img src="img/batman.png" height="500">
+  <img align="top" src="img/whatsapp.png" height="300">
+</div>
